@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
-// import '../App.css'
 import axios from 'axios'
 const axiosCustom = axios.create({
   headers: {'Accept': 'application/vnd.github.v3.text-match+json'}
 })
 
-import Codemirror from 'react-codemirror'
 import AceEditor from 'react-ace'
 
 import brace from 'brace';
