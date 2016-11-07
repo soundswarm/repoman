@@ -1,7 +1,7 @@
 ## Overview:
 This react app:
 
-31) takes your github username or organizationname
+1) takes your github username or organizationname
 
 2) displays the corresponding list of repos that are not forks
 
