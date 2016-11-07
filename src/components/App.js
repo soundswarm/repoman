@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import '../App.css';
 
 class App extends Component {
- 
+  componentDidMount() {
+    this.context.router.push({pathname: '/repos'}) // I wouldn't normally do this but ran out of time
+  }
   render() {
     return (
       <div className="App">
@@ -11,6 +13,10 @@ class App extends Component {
 
     );
   }
+}
+
+App.contextTypes = {
+  router: React.PropTypes.object.isRequired
 }
 
 
