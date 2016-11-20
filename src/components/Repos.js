@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+const axiosCustom = axios.create({
+  headers: {'Accept': 'application/vnd.github.v3.text-match+json'}
+})
+import bluebird from 'bluebird'
+import OAuth from 'oauthio-web'
+OAuth.initialize('')
 
 class Repos extends Component {
   componentWillMount() {
@@ -7,8 +13,37 @@ class Repos extends Component {
       username: '',
       repos: []
       // latestCommitTreeSha: ''
+
     }
-   
+
+    axios.get('https://api.github.com/users')
+    .then((res)=>{ 
+      const users = res.data
+
+      return bluebird.each(users, (user)=>{ 
+        return bluebird.delay(6000)
+        .then(()=>{ 
+          const userName = user.login
+          return axios.get(user.repos_url)
+          .then((res)=>{ 
+            const repos = res.data
+            return bluebird.each(repos, (repo)=>{ 
+              const repoName = repo.name
+              // const searchTerm = 
+              const searchCode = `https://api.github.com/search/code?q=/repoman/+in:file+repo:${userName}/${repoName}`
+              return axiosCustom.get(searchCode)
+              .then((res)=>{ 
+                console.log('codedata',res.data)
+                return res.data
+              })
+            })          
+          })
+        })
+       
+      })
+     
+    })
+
   } 
    handleChange(event) {
     this.setState({username: event.target.value})
